@@ -3,9 +3,9 @@
  *
  * Avatax JS
  *
- * @author    Surprise Highway
- * @copyright Copyright (c) 2019 Surprise Highway
- * @link      http://surprisehighway.com
+ * @author    Matter Communications
+ * @copyright Copyright (c) 2019 Matter Communications
+ * @link      http://matternow.com
  * @package   Avatax
  * @since     2.0.0
  */

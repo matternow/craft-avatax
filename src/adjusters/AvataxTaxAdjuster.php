@@ -1,8 +1,9 @@
 <?php 
 
-namespace surprisehighway\avatax\adjusters;
+namespace matternow\avatax\adjusters;
 
-use surprisehighway\avatax\services\SalesTaxService;
+use Avalara\TransactionSummary;
+use matternow\avatax\services\SalesTaxService;
 
 use Craft;
 use craft\base\Component;

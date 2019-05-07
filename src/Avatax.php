@@ -4,16 +4,16 @@
  *
  * Calculate and add sales tax to an order's base tax using Avalara's AvaTax service.
  *
- * @link      http://surprisehighway.com
- * @copyright Copyright (c) 2019 Surprise Highway
+ * @link      http://matternow.com
+ * @copyright Copyright (c) 2019 Matter Communications
  */
 
-namespace surprisehighway\avatax;
+namespace matternow\avatax;
 
-use surprisehighway\avatax\adjusters\AvataxTaxAdjuster;
-use surprisehighway\avatax\models\Settings;
-use surprisehighway\avatax\services\SalesTaxService;
-use surprisehighway\avatax\services\LogService;
+use matternow\avatax\adjusters\AvataxTaxAdjuster;
+use matternow\avatax\models\Settings;
+use matternow\avatax\services\SalesTaxService;
+use matternow\avatax\services\LogService;
 
 use Craft;
 use craft\base\Plugin;
@@ -32,22 +32,20 @@ use craft\commerce\elements\Order;
 use craft\commerce\events\AddressEvent;
 use craft\commerce\events\RefundTransactionEvent;
 use craft\commerce\models\TaxCategory;
-use craft\commerce\models\Transaction;
 use craft\commerce\services\Addresses;
 use craft\commerce\services\OrderAdjustments;
 use craft\commerce\services\Payments;
-use craft\commerce\services\TaxCategories;
 
 use yii\base\Event;
 
 /**
  * Class Avatax
  *
- * @author    Surprise Highway
+ * @author    Matter Communications
  * @package   Avatax
  * @since     2.0.0
  *
- * @property  SalesTaxServiceService $salesTaxService
+ * @property  SalesTaxService $salesTaxService
  */
 class Avatax extends Plugin
 {
@@ -167,6 +165,8 @@ class Avatax extends Plugin
     /**
      * Raised before address has been saved.
      * Validate an address in avatax.
+     *
+     * @param AddressEvent $event
      */
     public function onBeforeSaveAddress(AddressEvent $event)
     {
@@ -181,6 +181,8 @@ class Avatax extends Plugin
     /**
      * Raised after a transaction was attempted to be refunded.
      * Void a transaction in.
+     *
+     * @param RefundTransactionEvent $event
      */
     public function onRefundTransaction(RefundTransactionEvent $event)
     {

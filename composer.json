@@ -1,5 +1,5 @@
 {
-    "name": "surprisehighway/craft-avatax",
+    "name": "matternow/craft-avatax",
     "description": "Calculate and add sales tax to an order's base tax using Avalara's Avatax service.",
     "type": "craft-plugin",
     "version": "2.0.3",
@@ -11,14 +11,14 @@
         "avatax"
     ],
     "support": {
-        "docs": "https://github.com/surprisehighway/craft-avatax/blob/master/README.md",
-        "issues": "https://github.com/surprisehighway/craft-avatax/issues"
+        "docs": "https://github.com/matternow/craft-avatax/blob/master/README.md",
+        "issues": "https://github.com/matternow/craft-avatax/issues"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Surprise Highway",
-            "homepage": "http://surprisehighway.com"
+            "name": "Matter Communications",
+            "homepage": "http://matternow.com"
         }
     ],
     "require": {
@@ -34,7 +34,7 @@
     ],
     "autoload": {
         "psr-4": {
-          "surprisehighway\\avatax\\": "src/"
+          "matternow\\avatax\\": "src/"
         }
     },
     "extra": {
@@ -42,11 +42,11 @@
         "handle": "avatax",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/surprisehighway/craft-avatax/master/CHANGELOG.md",
-        "class": "surprisehighway\\avatax\\Avatax",
+        "changelogUrl": "https://raw.githubusercontent.com/matternow/craft-avatax/master/CHANGELOG.md",
+        "class": "matternow\\avatax\\Avatax",
         "components": {
-            "salesTaxService": "surprisehighway\\avatax\\services\\SalesTaxService",
-            "logService": "surprisehighway\\avatax\\services\\LogService"
+            "salesTaxService": "matternow\\avatax\\services\\SalesTaxService",
+            "logService": "matternow\\avatax\\services\\LogService"
         }
     }
 }

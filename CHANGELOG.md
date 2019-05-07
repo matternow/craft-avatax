@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 2.0.3 - 2019-05-03
 ### Fixed
-- Fixed an bug where address validation was being triggered in the control panel when saving a user ([#5](https://github.com/surprisehighway/craft-avatax/issues/5))
+- Fixed an bug where address validation was being triggered in the control panel when saving a user ([#5](https://github.com/matternow/craft-avatax/issues/5))
 
 ## 2.0.2 - 2019-04-22
 ### Added

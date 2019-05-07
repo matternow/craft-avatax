@@ -4,12 +4,12 @@
  *
  * Calculate and add sales tax to an order's base tax using Avalara's AvaTax service.
  *
- * @link      http://surprisehighway.com
- * @copyright Copyright (c) 2019 Surprise Highway
+ * @link      http://matternow.com
+ * @copyright Copyright (c) 2019 Matter Communications
  */
 
 /**
- * @author    Surprise Highway
+ * @author    Matter Communications
  * @package   Avatax
  * @since     2.0.0
  */
