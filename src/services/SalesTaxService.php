@@ -10,6 +10,8 @@
 
 namespace matternow\avatax\services;
 
+use Avalara\TransactionModel;
+use Avalara\TransactionSummary;
 use matternow\avatax\Avatax;
 use Avalara\AvaTaxClient;
 
@@ -23,8 +25,8 @@ use craft\commerce\models\Transaction;
 use craft\commerce\elements\Order;
 use craft\commerce\helpers\Currency;
 
+use matternow\avatax\models\Settings;
 use yii\base\Exception;
-use yii\log\Logger;
 
 /**
  * @author    Matter Communications
@@ -38,7 +40,7 @@ class SalesTaxService extends Component
     // =========================================================================
 
     /**
-     * @var settings
+     * @var Settings $settings
      */
     public $settings;
 
@@ -51,6 +53,11 @@ class SalesTaxService extends Component
      * @var string The type of commit (order or invoice)
      */
     public $type;
+
+    /**
+     * @var string
+     */
+    public $companyCode;
 
 
     // Public Methods
@@ -88,8 +95,8 @@ class SalesTaxService extends Component
     }
 
     /**
-     * @param object Order $order
-     * @return object
+     * @param Order $order
+     * @return string|TransactionSummary[]
      *
      *  From any other plugin file, call it like this:
      *  Avatax::getInstance()->SalesTaxService->createSalesOrder()
@@ -426,7 +433,7 @@ class SalesTaxService extends Component
     }
 
     /**
-     * @return object $client
+     * @return AvaTaxClient $client
      */
     private function createClient($settings = null)
     {
@@ -472,10 +479,10 @@ class SalesTaxService extends Component
     /**
      * @param object Order $order
      * @param object Avatax\TransactionBuilder $transaction
-     * @return object
-     *
+     * @param boolean $lineItems If individual lineItems should be returned rather than a tax total
+     * @return string|TransactionSummary[]
      */
-    private function getTotalTax($order, $transaction)
+    private function getTotalTax($order, $transaction, $lineItems = true)
     {
         if($this->settings['enableAddressValidation'])
         {
@@ -611,6 +618,7 @@ class SalesTaxService extends Component
         $cache = Craft::$app->getCache();
 
         // Check if tax request has been cached when not committing, if not make api call.
+        /* @var TransactionModel $response */
         $response = $cache->get($cacheKey);
         //if($response) Avatax::info('Cached order found: '.$cacheKey); 
 
@@ -624,6 +632,10 @@ class SalesTaxService extends Component
             {
                 Avatax::info('\Avalara\TransactionBuilder->create() '.$this->type.':', ['request' => json_encode($model), 'response' => json_encode($response)]);
             }
+        }
+
+        if ($lineItems) {
+            return $response->summary;
         }
 
         if(isset($response->totalTax))

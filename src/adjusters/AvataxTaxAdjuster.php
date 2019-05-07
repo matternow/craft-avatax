@@ -22,17 +22,20 @@ class AvataxTaxAdjuster extends Component implements AdjusterInterface
         {
             $taxService = new SalesTaxService;
 
-            $salesTax = $taxService->createSalesOrder($order);
+            /* @var TransactionSummary[] $taxSummary */
+            $taxSummary = $taxService->createSalesOrder($order);
 
-            $adjustment = new OrderAdjustment;
-            
-            $adjustment->type = 'tax';
-            $adjustment->name = 'Sales Tax';
-            $adjustment->description = 'Adds $'.$salesTax.' of tax to the order';
-            $adjustment->sourceSnapshot = [ 'avatax' => $salesTax];
-            $adjustment->amount = +$salesTax;
-            $adjustment->setOrder($order);
-            $adjustments[] = $adjustment;
+            foreach ($taxSummary as $taxAdjustment) {
+                $adjustment = new OrderAdjustment;
+
+                $adjustment->type = 'tax';
+                $adjustment->name = $taxAdjustment->taxName;
+                $adjustment->description = ((string) $taxAdjustment->rate * 100) . '% ' . $taxAdjustment->jurisType . ' ' . $taxAdjustment->taxType . ' Tax';
+                $adjustment->sourceSnapshot = [ 'avatax' => $taxAdjustment->tax];
+                $adjustment->amount = +$taxAdjustment->tax;
+                $adjustment->setOrder($order);
+                $adjustments[] = $adjustment;
+            }
         }
 
         return $adjustments;
