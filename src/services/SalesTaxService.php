@@ -390,6 +390,54 @@ class SalesTaxService extends Component
         return false;
     }
 
+    public function addressInfo($address)
+    {
+        $signature = $this->getAddressSignature($address);
+        $cacheKey = 'avatax-addressInfo-'.$signature;
+        $cache = Craft::$app->getCache();
+
+        if ($response = $cache->get($cacheKey)) {
+            return $response;
+        }
+
+        $request = [
+            'line1' => $address->address1,
+            'line2' => $address->address2,
+            'line3' => '',
+            'city' => $address->city,
+            'region' => $this->getState($address),
+            'postalCode' => $address->zipCode,
+            'country' => $address->country->iso,
+            'textCase' => 'Mixed'
+        ];
+
+        extract($request);
+
+        try {
+            $client = $this->createClient();
+            
+            $response = $client->resolveAddress(
+                $line1,
+                $line2,
+                $line3,
+                $city,
+                $region,
+                $postalCode,
+                $country,
+                $textCase
+            );
+
+            $cache->set($cacheKey, $response);
+
+            Avatax::info('\Avalara\AvaTaxClient->resolveAddress():', ['request' => json_encode($request), 'response' => json_encode($response)]);
+
+            return $response;
+
+        } catch (Exception $e) {
+            Craft::error($e->getMessage(), __METHOD__);
+        }
+    }
+
     // Private Methods
     // =========================================================================
 
