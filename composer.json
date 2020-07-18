@@ -22,7 +22,6 @@
         }
     ],
     "require": {
-        "craftcms/commerce": "^2.0",
         "craftcms/cms": "^3.1.0",
         "avalara/avataxclient": "^19.1"
     },
